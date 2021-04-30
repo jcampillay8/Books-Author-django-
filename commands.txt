@@ -1,0 +1,82 @@
+1) Consulta: crea 5 libros con los siguientes nombres: C Sharp, Java, Python, PHP, Ruby
+
+    Book.objects.create(title='C Sharp', desc='Programming Language')
+    Book.objects.create(title='Java', desc='Programming Language')
+    Book.objects.create(title='Python', desc='Programming Language')
+    Book.objects.create(title='PHP', desc='Programming Language')
+    Book.objects.create(title='Ruby', desc='Programming Language')
+
+2) Consulta: Crea 5 autores diferentes: Jane Austen, Emily Dickinson, Fyodor Dostoevksy, William Shakespeare, Lau Tzu
+
+    Author.objects.create(first_name='Janen', last_name='Austen')
+    Author.objects.create(first_name='Emily', last_name='Dicknson')
+    Author.objects.create(first_name='Fyodor', last_name='Fostoevksy')
+    Author.objects.create(first_name='William', last_name='Shakespeare')
+    Author.objects.create(first_name='Lau', last_name='Tzu')
+
+3) Agregue un nuevo campo de texto en la tabla de autores llamado 'notas'.
+
+    OK, cambios hechos y guardados 
+
+4) Cree y ejecute los archivos de migración para actualizar la tabla en su base de datos.
+
+    python manage.py makemigrations
+    python manage.py migrate
+
+5) Consulta: cambie el nombre del libro de C Sharp a C #
+
+    language=Book.objects.get(id=1)
+    language.title='C#'
+    language.save()
+
+6) Consulta: cambie el nombre del cuarto autor a Bill
+
+    author= Author.objects.get(id=4)
+    author.first_name='Bill'
+    author.save()
+
+7) Consulta: Asigna el primer autor a los primeros 2 libros.
+
+    a1= Author.objects.get(id=1)
+    a1.authors.add(Book.objects.get(id=1), Book.objects.get(id=2))
+    a1.save()
+
+8) Consulta: Asigne el segundo autor a los primeros 3 libros.
+
+    a2= Author.objects.get(id=2)
+    a2.authors.add(Book.objects.get(id=1), Book.objects.get(id=2),Book.objects.get(id=3))    
+    a2.save()
+
+9) Consulta: Asigna el tercer autor a los primeros 4 libros.
+
+    a3= Author.objects.get(id=3)
+    a3.authors.add(Book.objects.get(id=1), Book.objects.get(id=2),Book.objects.get(id=3),Book.objects.get(id=4))    
+    a3.save()
+
+10) Consulta: Asigne el cuarto autor a los primeros 5 libros (o en otras palabras, todos los libros)
+
+    a4= Author.objects.get(id=4)
+    a4.authors.add(Book.objects.get(id=1), Book.objects.get(id=2),Book.objects.get(id=3),Book.objects.get(id=4),Book.objects.get(id=5))
+    a4.save()
+
+11) Consulta: recupera a todos los autores del tercer libro
+
+    Book.objects.get(id=3).books.all()
+
+12) Consulta: eliminar al primer autor del tercer libro
+
+    Book.objects.get(id=3).authors.first().delete()
+
+13) Consulta: Agregue el quinto autor como uno de los autores del segundo libro.
+
+    a5= Author.objects.get(id=5)
+    a5.authors.add(Book.objects.get(id=2))
+    a5.save()
+
+14) Consulta: Encuentra todos los libros de los que el tercer autor es parte
+
+    Book.objects.filter(Author.objects.get(id=3))
+
+15) Consulta: Encuentra todos los autores que contribuyeron al quinto libro.
+
+    Author.objects.filter(Book.objects.get(id=5))
